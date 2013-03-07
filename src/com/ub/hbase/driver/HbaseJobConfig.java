@@ -11,6 +11,7 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
 
 import com.sun.jersey.core.impl.provider.entity.XMLJAXBElementProvider.Text;
 import com.ub.hbase.mapper.TestMapper;
@@ -54,6 +55,16 @@ public class HbaseJobConfig {
 		mrJob.setNumReduceTasks(mrNoTask);
 	}
 	
+	
+	public void setMapper(	Class<? extends Mapper> mapperClass,
+			Class<? extends WritableComparable> outputKeyClass, 
+            Class<? extends Writable> outputValueClass) {
+		
+		mrJob.setMapperClass(mapperClass);
+		mrJob.setMapOutputKeyClass(outputKeyClass);
+		mrJob.setMapOutputValueClass(outputValueClass);	
+		
+	}
 
 	/**
 	 * Initialize mapper
@@ -65,7 +76,7 @@ public class HbaseJobConfig {
 	 * @param outputValueClass
 	 */
 	
-	public void initMapper(String inputTableName,
+	public void initTableMapper(String inputTableName,
 			Scan scan,
 			Class<? extends TableMapper> mapperClass,
 			Class<? extends WritableComparable> outputKeyClass, 
@@ -92,7 +103,7 @@ public class HbaseJobConfig {
 	 * @param scan
 	 * @param reducerClass
 	 */
-	public void initReducer(String outputTableName,Scan scan,
+	public void initTableReducer(String outputTableName,Scan scan,
 			Class<? extends TableReducer> reducerClass) {
 		
 		mrJob.setReducerClass(reducerClass);

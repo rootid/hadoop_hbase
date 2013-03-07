@@ -48,10 +48,13 @@ public class Tester {
 		Scan scan = null;
 		scan = new Scan();
 		
-		jobConfig.initMapper("", scan, TestMapper.class, 
-				IntWritable.class,Text.class);
+//		jobConfig.initMapper("", scan, TestMapper.class, 
+//				IntWritable.class,Text.class);
 		
-		jobConfig.initReducer(TEST_TABLE, null, TestReducer.class);
+		jobConfig.setMapper(TestMapper.class,
+				Text.class,IntWritable.class);
+		
+		jobConfig.initTableReducer(TEST_TABLE, null, TestReducer.class);
 		
 		try {
 			
